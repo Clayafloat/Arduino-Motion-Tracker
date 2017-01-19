@@ -1,13 +1,17 @@
 def main(path, newFile):
+"""Processes and cleans the raw data collected from the arduino into a csv 
+
+	path -- path to raw data csv file
+	newFile -- file name to output
 """
-Processes and cleans the raw data collected from the arduino into a csv 
-"""
+
     f = open(path, 'r')
     w = open(newFile + ".csv", 'w')
 
+	TRIAL_TIME_SEC = 120.0
     record = {}
     prevTime = 0.0
-    largest = -9999999.9
+    largest = -9999999.9 
     temp = 0.0
 
     subtract = float(f.readline().split(',')[0])
@@ -26,7 +30,7 @@ Processes and cleans the raw data collected from the arduino into a csv
         elif pos == largest and pos:
             temp = pos
         else:
-            if (largest != -9999999.9 and float(prevTime) <= 120.0):
+            if (largest != -9999999.9 and float(prevTime) <= TRIAL_TIME_SEC):
                 w.writelines(str(float(prevTime) - subtract) + "," + str(largest) + "\n")
                 decay = largest
             largest = -9999999.9
